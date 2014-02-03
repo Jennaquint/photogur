@@ -5,3 +5,12 @@
 	<p><%= picture[:title] %>, <%= picture[:artist] %></p>
 	<%= link_to image_tag(picture.url), "/pictures/#{picture.id}" %>
 <% end %>
+
+<h2> Day Old Pictures</h2>
+
+<% @day_old_pictures.each do |picture| %>
+	<p><%= picture[:title] %>, <%= picture[:artist] %></p>
+	<%= link_to image_tag(picture.url), "/pictures/#{picture.id}" %>
+<% end %>
+
+	<p> The number of pictures that are more then a day old is: <%= Picture.created_before(1.day.ago).count %> </p>
