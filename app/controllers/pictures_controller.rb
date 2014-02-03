@@ -1,46 +1,43 @@
 class PicturesController < ApplicationController
-	def index
-		@pictures = Picture.all
-	end 
 
-	def show
-		@picture = Picture.find(params[:id])
-	end
+def index
+     @most_recent_pictures = Picture.most_recent_five
+  end
 
-	def new
-		@picture = Picture.new
-	end
+  def show
+    @picture = Picture.find(params[:id])
+  end
 
-	def create
-		@picture = Picture.new(picture_params)
-			if @picture.save
-				redirect_to pictures_url
-			else
-				render :new
-			end
-	end
+  def new
+    @picture = Picture.new 
+  end 
 
-	def edit
-		@picture = Picture.find(params[:id])
-	end
+  def create
+    @picture = Picture.new(picture_params)
+    if @picture.save 
+      redirect_to pictures_url
+    else
+      render :new
+    end
+  end
 
-	def update
-		@picture = Picture.find(params[:id])
+  def edit
+    @picture = Picture.find(params[:id])
+  end
 
-    		if @picture.update_attributes(picture_params)
-      			redirect_to "/pictures/#{@picture.id}"
-      		else
-      			render :edit
-      		end 
-	end
+  def update
+    @picture = Picture.find(params[:id])
 
-	def destroy
-    	@picture = Picture.find(params[:id])
-    	@picture.destroy
-    	redirect_to pictures_url
-  	end
-	private
-	def picture_params
-		params.require(:picture).permit(:artist, :title, :url)
-	end
-end 
+    if @picture.update_attributes(picture_params)
+      redirect_to "/pictures/#{@picture.id}"
+    else
+      render :edit
+    end
+  end
+
+  private
+  def picture_params
+    params.require(:picture).permit(:artist, :title, :url)
+  end  
+  
+end
